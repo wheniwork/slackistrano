@@ -1,6 +1,11 @@
 namespace :slack do
   namespace :deploy do
 
+    desc 'Notify about starting deploy'
+    task :starting do
+      Slackistrano::Capistrano.new(self).run(:starting)
+    end
+
     desc 'Notify about updating deploy'
     task :updating do
       Slackistrano::Capistrano.new(self).run(:updating)
@@ -34,6 +39,7 @@ namespace :slack do
   end
 end
 
+before 'deploy:starting',           'slack:deploy:starting'
 before 'deploy:updating',           'slack:deploy:updating'
 before 'deploy:reverting',          'slack:deploy:reverting'
 after  'deploy:finishing',          'slack:deploy:updated'

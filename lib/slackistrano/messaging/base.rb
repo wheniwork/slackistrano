@@ -20,6 +20,12 @@ module Slackistrano
         @webhook = webhook
       end
 
+      def payload_for_starting
+        {
+          text: "#{deployer} has kicked off deploying branch #{branch} of #{application} to #{stage}"
+        }
+      end
+
       def payload_for_updating
         {
           text: "#{deployer} has started deploying branch #{branch} of #{application} to #{stage}"
